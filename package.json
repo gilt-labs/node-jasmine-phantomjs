@@ -1,0 +1,46 @@
+{
+  "name": "node-jasmine-phantomjs",
+  "version": "0.1.0",
+  "description": "PhantomJS Runner for Jasmine 1.x",
+  "keywords": [
+    "phantomjs",
+    "jasmine",
+    "test",
+    "runner",
+    "browser"
+  ],
+  "author": "Gilt Tech <gilt-tech@gilt.com>",
+  "maintainers": [
+    {
+      "name": "Andrew Powell",
+      "email": "andrew@shellscape.org"
+    }
+  ],
+  "main": "./jasmine-phantomjs.js",
+  "bugs": {
+    "url": "http://github.com/gilt/node-jasmine-phantomjs/issues"
+  },
+  "homepage": "https://github.com/gilt/node-jasmine-phantomjs",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/gilt/node-jasmine-phantomjs/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/gilt/node-jasmine-phantomjs.git"
+  },
+  "peerDependencies": {
+    "phantomjs": "~1.9.1"
+  },
+  "dependencies": {
+    "minimist": "*"
+  },
+  "devDependencies": {
+    "phantomjs": "~1.9.1",
+    "chai": "1.8.x",
+    "coffee-script": "1.6.x",
+    "requirejs": "2.1.x"
+  }
+}

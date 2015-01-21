@@ -54,28 +54,28 @@
         system.stderr.write(message + '\n' + stack + '\n');
       }
 
-      // var ignorePatterns = [
-      //   /SyntaxError: Parse error/
-      // ];
+      var ignorePatterns = [
+        /SyntaxError: Parse error/
+      ];
 
-      // for (var i = 0; i < ignorePatterns.lenght; i++){
-      //   if (ignorePatterns.test(message)) {
-      //     return;
-      //   }
-      // }
+      for (var i = 0; i < ignorePatterns.lenght; i++){
+        if (ignorePatterns.test(message)) {
+          return;
+        }
+      }
 
-      // return phantom.exit(errorNumber || 1);
+      return phantom.exit(errorNumber || 1);
     },
 
     finish: function () {
       return phantom.exit(this.page.evaluate(function () {
-        return window.__runner.failures;
+        return window.__runner__.failures;
       }));
     },
 
     hasStarted: function () {
       var started = this.page.evaluate(function() {
-        return window.__runner.started;
+        return window.__runner__.started;
       });
 
       if (!started && this.startTimeout && this.startTime + this.startTimeout < Date.now()) {
@@ -111,6 +111,7 @@
         },
 
         onError: function (message, traces) {
+
           var file, index, line, trace;
 
           if (self.page.evaluate(function () { return window.onerror != null; })) {
@@ -134,7 +135,7 @@
 
             window.jasmineEnv = null;
             window.process = process;
-            window.__runner = {
+            window.__runner__ = {
               env: process.env,
               failures: 0,
               finished: false,
@@ -150,16 +151,16 @@
                   }
                 }
 
-                window.__runner.started = true;
+                window.__runner__.started = true;
 
                 // this will trigger this.page.onCallback
-                window.callPhantom({ '__runner.run': true });
+                window.callPhantom({ '__runner__.run': true });
 
                 return true;
               }
             };
 
-            return window.__runner;
+            return window.__runner__;
 
           }, system);
 
@@ -177,12 +178,12 @@
     injectJS: function () {
 
       if (this.page.evaluate(function () { return window.jasmine != null; })) {
-        this.page.injectJs('phantom-extensions.js');
+        this.page.injectJs('lib/phantom-extensions.js');
 
         return true;
       }
       else {
-        this.fail("Failed to find mocha on the page.");
+        this.fail("Failed to find jasmine on the page.");
         return false;
       }
     },
@@ -198,8 +199,8 @@
         if (data && data.hasOwnProperty('jasmine.process.stdout.write')) {
           self.output.write(data['jasmine.process.stdout.write']);
         }
-        // sent from window.__runner.run
-        else if (data && data.hasOwnProperty('__runner.run')) {
+        // sent from window.__runner__.run
+        else if (data && data.hasOwnProperty('__runner__.run')) {
           if (self.injectJS()) {
             self.waitToStartJasmine();
           }
@@ -240,9 +241,9 @@
 
         FinishedReporter.prototype = {
           reportRunnerResults: function (runner) {
-            window.__runner.failures = this.failed;
-            window.__runner.passed = (this.failed === 0);
-            window.__runner.finished = true;
+            window.__runner__.failures = this.failed;
+            window.__runner__.passed = (this.failed === 0);
+            window.__runner__.finished = true;
           },
 
           reportSpecStarting: function (spec) {
@@ -291,7 +292,7 @@
 
     waitForJasmine: function () {
 
-      var finished = this.page.evaluate(function () { return window.__runner.finished; }),
+      var finished = this.page.evaluate(function () { return window.__runner__.finished; }),
         self = this;
 
       if (finished) {

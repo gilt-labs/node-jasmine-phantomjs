@@ -1,6 +1,6 @@
 {
   "name": "node-jasmine-phantomjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "PhantomJS Runner for Jasmine 1.x",
   "keywords": [
     "phantomjs",

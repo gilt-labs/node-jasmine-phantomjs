@@ -107,7 +107,9 @@
       this.page = extend(this.page, {
 
         onConsoleMessage: function (message) {
-          return system.stdout.writeLine('[console] ' + message);
+          if (self.options && !self.options.suppressConsole) {
+            return system.stdout.writeLine('[console] ' + message);
+          }
         },
 
         onError: function (message, traces) {
@@ -142,6 +144,7 @@
               started: false,
 
               run: function (options) {
+                self.options = options;
                 jasmineEnv = options.jasmine || jasmine.getEnv();
                 jasmineEnv.updateInterval = 1000;
 

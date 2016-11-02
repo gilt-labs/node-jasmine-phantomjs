@@ -107,7 +107,7 @@
       this.page = extend(this.page, {
 
         onConsoleMessage: function (message) {
-          if (self.options && !self.options.suppressConsole) {
+          if (!self.options || (self.options && !self.options.suppressConsole)) {
             return system.stdout.writeLine('[console] ' + message);
           }
         },
